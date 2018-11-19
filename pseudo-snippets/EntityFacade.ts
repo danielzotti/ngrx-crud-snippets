@@ -5,87 +5,85 @@ import { Observable, of } from "rxjs";
 import { Store } from "@ngrx/store";
 
 import { AppState } from "../store/state";
-import { I${1:Entity}Edit } from "src/app/components/${3:entity}/edit/${3:entity}-edit.models";
+import { IEntityEdit } from "src/app/components/entity/edit/entity-edit.models";
 import {
-  ${2:entity}CreateModel,
-  ${2:entity}CreateModelIsLoading,
-  ${2:entity}List,
-  ${2:entity}IsFetching,
-  ${2:entity}ById,
-  ${2:entity}EditModel,
-  ${2:entity}EditModelIsLoading
-} from "../store/${3:entity}/${3:entity}.selectors";
+  entityCreateModel,
+  entityCreateModelIsLoading,
+  entityList,
+  entityIsFetching,
+  entityById,
+  entityEditModel,
+  entityEditModelIsLoading
+} from "../store/entity/entity.selectors";
 import {
-  ${1:Entity}Create,
-  ${1:Entity}Update,
-  ${1:Entity}LoadCancel,
-  ${1:Entity}Load,
-  ${1:Entity}Delete,
-  ${1:Entity}ListLoad,
-  ${1:Entity}ListLoadCancel
-} from "../store/${3:entity}/${3:entity}.action";
-import { I${1:Entity}Create } from "../components/${3:entity}/create/${3:entity}-create.models";
-import { I${1:Entity}Detail } from "../components/${3:entity}/detail/${3:entity}-detail.models";
+  EntityCreate,
+  EntityUpdate,
+  EntityLoadCancel,
+  EntityLoad,
+  EntityDelete,
+  EntityListLoad,
+  EntityListLoadCancel
+} from "../store/entity/entity.action";
+import { IEntityCreate } from "../components/entity/create/entity-create.models";
+import { IEntityDetail } from "../components/entity/detail/entity-detail.models";
 
 @Injectable()
-export class ${1:Entity}Facade {
+export class EntityFacade {
   // Fetch
-  isFetching$: Observable<boolean> = this.store.select(
-    ${2:entity}IsFetching
-  );
+  isFetching$: Observable<boolean> = this.store.select(entityIsFetching);
 
   // Create
-  createModel$: Observable<
-    Partial<I${1:Entity}Create>
-  > = this.store.select(${2:entity}CreateModel);
+  createModel$: Observable<Partial<IEntityCreate>> = this.store.select(
+    entityCreateModel
+  );
   createModelIsLoading$: Observable<boolean> = this.store.select(
-    ${2:entity}CreateModelIsLoading
+    entityCreateModelIsLoading
   );
 
   // Update
-  editModel$: Observable<Partial<I${1:Entity}Edit>> = this.store.select(
-    ${2:entity}EditModel
+  editModel$: Observable<Partial<IEntityEdit>> = this.store.select(
+    entityEditModel
   );
   editModelIsLoading$: Observable<boolean> = this.store.select(
-    ${2:entity}EditModelIsLoading
+    entityEditModelIsLoading
   );
 
   // List
-  list$: Observable<Array<I${1:Entity}Detail>> = this.store.select(
-    ${2:entity}List
+  list$: Observable<Array<IEntitySelectListItem>> = this.store.select(
+    entityList
   );
 
   constructor(private store: Store<AppState>) {}
 
   // List
   loadAll() {
-    this.store.dispatch(new ${1:Entity}ListLoad());
+    this.store.dispatch(new EntityListLoad());
   }
   cancelLoadAll() {
-    this.store.dispatch(new ${1:Entity}ListLoadCancel());
+    this.store.dispatch(new EntityListLoadCancel());
   }
 
   // Create
-  create(contract: I${1:Entity}Create) {
-    this.store.dispatch(new ${1:Entity}Create(contract));
+  create(entityParam: IEntityCreate) {
+    this.store.dispatch(new EntityCreate(entityParam));
   }
   // Update
-  update(contract: I${1:Entity}Edit) {
-    this.store.dispatch(new ${1:Entity}Update(contract));
+  update(entityParam: IEntityEdit) {
+    this.store.dispatch(new EntityUpdate(entityParam));
   }
   // Delete
-  delete(contract: I${1:Entity}Edit) {
-    this.store.dispatch(new ${1:Entity}Delete(contract));
+  delete(entityParam: IEntityStoreEntity) {
+    this.store.dispatch(new EntityDelete(entityParam));
   }
 
   // Get By Id
-  loadById(contractId: number) {
-    this.store.dispatch(new ${1:Entity}Load(contractId));
+  loadById(entityParamId: number) {
+    this.store.dispatch(new EntityLoad(entityParamId));
   }
   cancelLoadById() {
-    this.store.dispatch(new ${1:Entity}LoadCancel());
+    this.store.dispatch(new EntityLoadCancel());
   }
-  getById(contractId: number) {
-    return this.store.select(${2:entity}ById(contractId));
+  getById(entityParamId: number) {
+    return this.store.select(entityById(entityParamId));
   }
 }

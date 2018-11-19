@@ -1,51 +1,50 @@
-import { createSelector } from '@ngrx/store';
-import * as fromObjectUtils from '../utils/object.utils';
+import { createSelector } from "@ngrx/store";
+import * as fromObjectUtils from "../utils/object.utils";
 
-export const select${1:Entity}State = (state: AppState): I${1:Entity}State =>
-  state.${2:entityState};
+export const selectEntityState = (state: AppState): IEntityState =>
+  state.entityState;
 
 // Entities
-export const ${3:entity}Entities = createSelector(
-    select${1:Entity}State,
-    state => state.entities
+export const entityEntities = createSelector(
+  selectEntityState,
+  state => state.entities
 );
 
-// List
-export const ${3:entity}List = createSelector(
-    ${3:entity}Entities,
-    entities => fromObjectUtils.toArray(entities)
+// List in array
+export const entityList = createSelector(
+  entityEntities,
+  entities => fromObjectUtils.toArray(entities)
 );
 
 // Fetch
-export const ${3:entity}IsFetching = createSelector(
-    select${1:Entity}State,
-    ${2:entityState} => ${2:entityState}.isFetching
+export const entityIsFetching = createSelector(
+  selectEntityState,
+  state => state.isFetching
 );
 
 // Create
-export const ${3:entity}CreateModel = createSelector(
-    select${1:Entity}State,
-    ${2:entityState} => ${2:entityState}.createModel
+export const entityCreateModel = createSelector(
+  selectEntityState,
+  state => state.createModel
 );
-export const ${3:entity}CreateModelIsLoading = createSelector(
-    ${3:entity}CreateModel,
-    create => create.isLoading
-);
-  
-// Edit
-export const ${3:entity}EditModel = createSelector(
-    select${1:Entity}State,
-    ${2:entityState} => ${2:entityState}.editModel
-);
-export const ${3:entity}EditModelIsLoading = createSelector(
-    ${3:entity}EditModel,
-    edit => (edit && edit.isLoading ? true : false)
-);
-  
-// GetById
-export const ${3:entity}ById = (${3:entity}Id: number) =>
-  createSelector(
-    ${3:entity}Entities,
-    entities => entities[${3:entity}Id]
+export const entityCreateModelIsLoading = createSelector(
+  entityCreateModel,
+  create => create.isLoading
 );
 
+// Edit
+export const entityEditModel = createSelector(
+  selectEntityState,
+  state => state.editModel
+);
+export const entityEditModelIsLoading = createSelector(
+  entityEditModel,
+  edit => (edit && edit.isLoading ? true : false)
+);
+
+// GetById
+export const entityById = (entityId: number) =>
+  createSelector(
+    entityEntities,
+    entities => entities[entityId]
+  );
