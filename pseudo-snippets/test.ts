@@ -1,162 +1,89 @@
 import { Injectable } from "@angular/core";
-import { Effect, Actions, ofType } from "@ngrx/effects";
 
-import { map, catchError, switchMap, mergeMap } from "rxjs/operators";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 
-import { ProjectService } from "../../services/project.service";
-import { ErrorOccurred } from "../error/error.actions";
+import { Store } from "@ngrx/store";
+
+import { AppState } from "../store/state";
+import { IProjectEdit } from "src/app/components/project/edit/project-edit.models";
 import {
-  ProjectActionTypes,
+  projectCreateModel,
+  projectCreateModelIsLoading,
+  projectList,
+  projectIsFetching,
+  projectById,
+  projectEditModel,
+  projectEditModelIsLoading
+} from "../store/project/project.selectors";
+import {
   ProjectCreate,
-  ProjectCreateSuccess,
-  ProjectCreateError,
-  ProjectLoad,
-  ProjectLoadCancel,
-  ProjectLoadSuccess,
-  ProjectLoadError,
   ProjectUpdate,
-  ProjectUpdateSuccess,
-  ProjectUpdateError,
+  ProjectLoadCancel,
+  ProjectLoad,
   ProjectDelete,
-  ProjectDeleteSuccess,
-  ProjectDeleteError,
-  ProjectListLoadSuccess,
-  ProjectListLoadCancel,
   ProjectListLoad,
-  ProjectListLoadError
-} from "./project.actions";
-
-import { TranslateService } from "src/app/modules/core/modules/translate/translate.service";
-import { ToastService } from "src/app/modules/core/modules/toast/toast.service";
+  ProjectListLoadCancel
+} from "../store/project/project.action";
+import { IProjectCreate } from "../components/project/create/project-create.models";
+import { IProjectDetail } from "../components/project/detail/project-detail.models";
 
 @Injectable()
-export class ProjectEffects {
-  constructor(
-    private actions$: Actions,
-    private toastService: ToastService,
-    private translateService: TranslateService,
-    private projectService: ProjectService
-  ) {}
+export class ProjectFacade {
+  // Fetch
+  isFetching$: Observable<boolean> = this.store.select(projectIsFetching);
 
-  // LOAD / LOAD CANCEL
-  @Effect()
-  projectLoadOrCancel$ = this.actions$.pipe(
-    ofType<ProjectLoad | ProjectLoadCancel>(
-      ProjectActionTypes.Load,
-      ProjectActionTypes.LoadCancel
-    ),
-    switchMap(action => {
-      return action.type === ProjectActionTypes.LoadCancel
-        ? of()
-        : this.projectService.getById(action.payload.projectId).pipe(
-            map(project => new ProjectLoadSuccess(project)),
-            catchError(err =>
-              of(
-                new ErrorOccurred({
-                  fromAction: action,
-                  errorData: err,
-                  nextAction: new ProjectLoadError()
-                })
-              )
-            )
-          );
-    })
+  // Create
+  createModel$: Observable<Partial<IProjectCreate>> = this.store.select(
+    projectCreateModel
+  );
+  createModelIsLoading$: Observable<boolean> = this.store.select(
+    projectCreateModelIsLoading
   );
 
-  // CREATE
-  @Effect()
-  projectCreate$ = this.actions$.pipe(
-    ofType<ProjectCreate>(ProjectActionTypes.Create),
-    switchMap(action =>
-      this.projectService.create(action.payload.project).pipe(
-        map(project => {
-          this.toastService.success(
-            `ID:${project.id}`,
-            this.translateService.translate(
-              "Entità creata correttamente",
-              "client_response.project_created"
-            )
-          );
-          return new ProjectCreateSuccess(project);
-        }),
-        catchError(err =>
-          of(
-            new ErrorOccurred({
-              fromAction: action,
-              errorData: err,
-              nextAction: new ProjectCreateError(action.payload.project)
-            })
-          )
-        )
-      )
-    )
+  // Update
+  editModel$: Observable<Partial<IProjectEdit>> = this.store.select(
+    projectEditModel
+  );
+  editModelIsLoading$: Observable<boolean> = this.store.select(
+    projectEditModelIsLoading
   );
 
-  // UPDATE
-  @Effect()
-  projectUpdate$ = this.actions$.pipe(
-    ofType<ProjectUpdate>(ProjectActionTypes.Update),
-    switchMap(action => {
-      return this.projectService.update(action.payload.project).pipe(
-        map(project => {
-          return new ProjectUpdateSuccess(project);
-        }),
-        catchError(err =>
-          of(
-            new ErrorOccurred({
-              fromAction: action,
-              errorData: err,
-              nextAction: new ProjectUpdateError(action.payload.project)
-            })
-          )
-        )
-      );
-    })
+  // List
+  list$: Observable<Array<IProjectSelectListItem>> = this.store.select(
+    projectList
   );
 
-  // DELETE
-  @Effect()
-  projectDelete$ = this.actions$.pipe(
-    ofType<ProjectDelete>(ProjectActionTypes.Delete),
-    switchMap(action =>
-      this.projectService.delete(action.payload.project.id).pipe(
-        map(project => new ProjectDeleteSuccess(project)),
-        catchError(err =>
-          of(
-            new ErrorOccurred({
-              fromAction: action,
-              errorData: err,
-              nextAction: new ProjectDeleteError(action.payload.project)
-            })
-          )
-        )
-      )
-    )
-  );
+  constructor(private store: Store<AppState>) {}
 
-  // LIST LOAD / LIST LOAD CANCEL
-  @Effect()
-  projectListLoadOrCancel$ = this.actions$.pipe(
-    ofType<ProjectListLoad | ProjectListLoadCancel>(
-      ProjectActionTypes.ListLoad,
-      ProjectActionTypes.ListLoadCancel
-    ),
-    switchMap(action =>
-      action.type === ProjectActionTypes.ListLoadCancel
-        ? of()
-        : this.projectService.getSelectList().pipe(
-            map(list => new ProjectListLoadSuccess(list)),
-            catchError(err =>
-              of(
-                new ErrorOccurred({
-                  fromAction: action,
-                  errorData: err,
-                  nextAction: new ProjectListLoadError()
-                })
-              )
-            )
-          )
-    )
-  );
+  // List
+  loadAll() {
+    this.store.dispatch(new ProjectListLoad());
+  }
+  cancelLoadAll() {
+    this.store.dispatch(new ProjectListLoadCancel());
+  }
+
+  // Create
+  create(project: IProjectCreate) {
+    this.store.dispatch(new ProjectCreate(project));
+  }
+  // Update
+  update(project: IProjectEdit) {
+    this.store.dispatch(new ProjectUpdate(project));
+  }
+  // Delete
+  delete(project: IProjectStoreEntity) {
+    this.store.dispatch(new ProjectDelete(project));
+  }
+
+  // Get By Id
+  loadById(projectId: number) {
+    this.store.dispatch(new ProjectLoad(projectId));
+  }
+  cancelLoadById() {
+    this.store.dispatch(new ProjectLoadCancel());
+  }
+  getById(projectId: number) {
+    return this.store.select(projectById(projectId));
+  }
 }
