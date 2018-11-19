@@ -75,7 +75,7 @@ export class EntityEffects {
             `ID:${entityParam.id}`,
             this.translateService.translate(
               "TODO: Entità creata correttamente",
-              "client_response.entityTranslate_created"
+              "client_response.entity_translate_key_created"
             )
           );
           return new EntityCreateSuccess(entityParam);
@@ -104,7 +104,7 @@ export class EntityEffects {
             `ID:${entityParam.id}`,
             this.translateService.translate(
               "TODO: Entità modificata correttamente",
-              "client_response.entityTranslate_updated"
+              "client_response.entity_translate_key_updated"
             )
           );
           return new EntityUpdateSuccess(entityParam);
