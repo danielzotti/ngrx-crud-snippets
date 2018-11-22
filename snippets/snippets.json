@@ -1,5 +1,5 @@
 {
-    "NGRX Common Action Types": {
+    "NGRX CRUD Action Types": {
         "prefix": "ngrx-crud-action-types",
         "body": [
             "import { Action } from '@ngrx/store';\r",
@@ -38,7 +38,7 @@
         ],
         "description": "List of common ActionTypes of a CRUD Entity"
     },
-    "NGRX Common Actions": {
+    "NGRX CRUD Actions": {
         "prefix": "ngrx-crud-actions",
         "body": [
             "//CREATE\r",
@@ -223,7 +223,7 @@
         ],
         "description": "List of common Actions of a CRUD Entity"
     },
-    "NGRX Common Selectors": {
+    "NGRX CRUD Selectors": {
         "prefix": "ngrx-crud-selectors",
         "body": [
             "import { createSelector } from '@ngrx/store';\r",
@@ -274,7 +274,7 @@
         ],
         "description": "List of common selectors of a CRUD Entity"
     },
-    "NGRX Common Reducers": {
+    "NGRX CRUD Reducers": {
         "prefix": "ngrx-crud-reducers",
         "body": [
             "import { adapter } from './${2:entity}.adapter';\r",
@@ -420,7 +420,7 @@
         ],
         "description": "List of common reducers of a CRUD Entity"
     },
-    "NGRX Common Effects": {
+    "NGRX CRUD Effects": {
         "prefix": "ngrx-crud-effects",
         "body": [
             "import { Injectable } from \"@angular/core\";\r",
@@ -600,7 +600,7 @@
         ],
         "description": "List of common effects of a CRUD Entity"
     },
-    "NGRX Common Service": {
+    "NGRX CRUD Service": {
         "prefix": "ngrx-crud-services",
         "body": [
             "import { Injectable } from '@angular/core';\r",
@@ -663,7 +663,7 @@
         ],
         "description": "List of common service of a CRUD Entity"
     },
-    "NGRX Common Facade": {
+    "NGRX CRUD Facade": {
         "prefix": "ngrx-crud-facade",
         "body": [
             "import { Injectable } from \"@angular/core\";\r",
@@ -740,6 +740,21 @@
             "    this.store.dispatch(new ${1:Entity}Delete(${4:entityParam}));\r",
             "  }\r",
             "\r",
+            "  // Create Model\r",
+            "  setEditModel(${2:entity}: I${1:Entity}Edit) {\r",
+            "    this.store.dispatch(new ${1:Entity}SetEditModel(${2:entity}));\r",
+            "  }\r",
+            "  unsetEditModel() {\r",
+            "    this.store.dispatch(new ${1:Entity}UnsetEditModel());\r",
+            "  }\r",
+            "  // Edit Model\r",
+            "  setCreateModel(${2:entity}: I${1:Entity}Create) {\r",
+            "    this.store.dispatch(new ${1:Entity}SetCreateModel(${2:entity}));;\r",
+            "  }\r",
+            "  unsetCreateModel() {\r",
+            "    this.store.dispatch(new ${1:Entity}UnsetCreateModel());\r",
+            "  }\r",
+            "\r",
             "  // Get By Id\r",
             "  loadById(${4:entityParam}Id: number) {\r",
             "    this.store.dispatch(new ${1:Entity}Load(${4:entityParam}Id));\r",
@@ -755,4 +770,23 @@
         ],
         "description": "Common facade of a CRUD Entity"
     },
+    "NGRX Edit and Create Model Facade": {
+        "prefix": "ngrx-set-unset-model-facade",
+        "body": [
+            "set${1:Entity}CreateModel(${2:entity}: I${1:Entity}Create) {\r",
+            "  this.${2:entity}Facade.setCreateModel(${2:entity});\r",
+            "}\r",
+            "unset${1:Entity}CreateModel() {\r",
+            "  this.${2:entity}Facade.unsetCreateModel();\r",
+            "}\r",
+            "\r",
+            "set${1:Entity}EditModel(${2:entity}: I${1:Entity}Edit) {\r",
+            "  this.${2:entity}Facade.setEditModel(${2:entity});\r",
+            "}\r",
+            "unset${1:Entity}EditModel() {\r",
+            "  this.${2:entity}Facade.unsetEditModel();\r",
+            "}"
+        ],
+        "description": "Set/unset edit/create model"
+    }
 }
