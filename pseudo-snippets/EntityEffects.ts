@@ -70,16 +70,16 @@ export class EntityEffects {
     ofType<EntityCreate>(EntityActionTypes.Create),
     switchMap(action =>
       this.entityService.create(action.payload.entityParam).pipe(
-        map(entityParam => {
+        tap(entityParam =>
           this.toastService.success(
             `ID:${entityParam.id}`,
             this.translateService.translate(
-              "TODO: Entità creata correttamente",
-              "client_response.entity_translate_created"
+              "Entità creata correttamente",
+              "client_response.entity_translate_key_created"
             )
-          );
-          return new EntityCreateSuccess(entityParam);
-        }),
+          )
+        ),
+        map(entityParam => new EntityCreateSuccess(entityParam)),
         catchError(err =>
           of(
             new ErrorOccurred({
@@ -99,9 +99,16 @@ export class EntityEffects {
     ofType<EntityUpdate>(EntityActionTypes.Update),
     switchMap(action => {
       return this.entityService.update(action.payload.entityParam).pipe(
-        map(entityParam => {
-          return new EntityUpdateSuccess(entityParam);
-        }),
+        tap(entityParam =>
+          this.toastService.success(
+            `ID:${entityParam.id}`,
+            this.translateService.translate(
+              "Entità modificata correttamente",
+              "client_response.entity_translate_key_updated"
+            )
+          )
+        ),
+        map(entityParam => new EntityUpdateSuccess(entityParam)),
         catchError(err =>
           of(
             new ErrorOccurred({
@@ -121,13 +128,41 @@ export class EntityEffects {
     ofType<EntityDelete>(EntityActionTypes.Delete),
     switchMap(action =>
       this.entityService.delete(action.payload.entityParam.id).pipe(
-        map(entityParam => new EntityDeleteSuccess(entityParam)),
+        // map(entityParam => new EntityDeleteSuccess(entityParam)),
+        map(entityParam => {
+          if (!entityParam) {
+            return new EntityDeleteSuccessPermanent(action.payload.entityParam);
+          }
+          return new EntityDeleteSuccessLogical(entityParam);
+        }),
         catchError(err =>
           of(
             new ErrorOccurred({
               fromAction: action,
               errorData: err,
               nextAction: new EntityDeleteError(action.payload.entityParam)
+            })
+          )
+        )
+      )
+    )
+  );
+
+  // UNDELETE
+  @Effect()
+  entityUndelete$ = this.actions$.pipe(
+    ofType<entityUndelete>(entityActionTypes.Undelete),
+    switchMap(action =>
+      this.entityService.undelete(action.payload.entityParam.id).pipe(
+        map(entityParam => {
+          return new entityUndeleteSuccess(entityParam);
+        }),
+        catchError(err =>
+          of(
+            new ErrorOccurred({
+              fromAction: action,
+              errorData: err,
+              nextAction: new entityUndeleteError()
             })
           )
         )

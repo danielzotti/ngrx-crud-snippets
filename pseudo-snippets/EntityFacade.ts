@@ -23,7 +23,7 @@ import {
   EntityDelete,
   EntityListLoad,
   EntityListLoadCancel
-} from "../store/entity/entity.action";
+} from "../store/entity/entity.actions";
 import { IEntityCreate } from "../components/entity/create/entity-create.models";
 import { IEntityDetail } from "../components/entity/detail/entity-detail.models";
 
@@ -36,16 +36,10 @@ export class EntityFacade {
   createModel$: Observable<Partial<IEntityCreate>> = this.store.select(
     entityCreateModel
   );
-  createModelIsLoading$: Observable<boolean> = this.store.select(
-    entityCreateModelIsLoading
-  );
 
   // Update
   editModel$: Observable<Partial<IEntityEdit>> = this.store.select(
     entityEditModel
-  );
-  editModelIsLoading$: Observable<boolean> = this.store.select(
-    entityEditModelIsLoading
   );
 
   // List
@@ -74,6 +68,25 @@ export class EntityFacade {
   // Delete
   delete(entityParam: IEntityStoreEntity) {
     this.store.dispatch(new EntityDelete(entityParam));
+  }
+  // Undelete
+  undelete(entityParam: IEntityStoreEntity) {
+    this.store.dispatch(new EntityUndelete(entityParam));
+  }
+
+  // Create Model
+  setEditModel(entity: IEntityEdit) {
+    this.store.dispatch(new EntitySetEditModel(entity));
+  }
+  unsetEditModel() {
+    this.store.dispatch(new EntityUnsetEditModel());
+  }
+  // Edit Model
+  setCreateModel(entity: IEntityCreate) {
+    this.store.dispatch(new EntitySetCreateModel(entity));
+  }
+  unsetCreateModel() {
+    this.store.dispatch(new EntityUnsetCreateModel());
   }
 
   // Get By Id

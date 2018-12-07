@@ -28,7 +28,7 @@ export function entityReducer(
       const createdModel = { ...action.payload.entityParam };
       return adapter.addOne(createdModel, {
         ...state,
-        createModel: { isDone: true }
+        createModel: { isLoading: false, isDone: true }
       });
     // CREATE ERROR
     case EntityActionTypes.CreateError:
@@ -38,6 +38,7 @@ export function entityReducer(
       };
     // UPDATE
     case EntityActionTypes.Update:
+    case EntityActionTypes.Undelete:
       const editModel = { ...action.payload.entityParam };
       return {
         ...state,
@@ -46,16 +47,41 @@ export function entityReducer(
 
     // UPDATE SUCCESS
     case EntityActionTypes.UpdateSuccess:
+    case EntityActionTypes.DeleteSuccessLogical:
+    case EntityActionTypes.UndeleteSuccess:
       const editedModel = { ...action.payload.entityParam };
       return adapter.upsertOne(editedModel, {
         ...state,
-        editModel: { ...editedModel, isLoading: false }
+        editModel: { ...editedModel, isLoading: false, isDone: true }
       });
     // UPDATE ERROR
     case EntityActionTypes.UpdateError:
+    case EntityActionTypes.DeleteError:
+    case EntityActionTypes.UndeleteError:
       return {
         ...state,
-        editModel: { ...state.editModel, isLoading: false }
+        editModel: { ...state.editModel, isLoading: false, hasError: true }
+      };
+    // DELETE
+    case EntityActionTypes.Delete:
+      const deleteModel = { ...action.payload.entityParam };
+      return {
+        ...state,
+        editModel: { ...deleteModel, isLoading: true }
+      };
+    // DELETE SUCCESS
+    case EntityActionTypes.DeleteSuccess:
+    case EntityActionTypes.DeleteSuccessPermanent:
+      const deletedModel = { ...action.payload.entityParam };
+      return adapter.removeOne(deletedModel.id, {
+        ...state,
+        editModel: { ...deletedModel, isLoading: false, isDone: true }
+      });
+    // DELETE ERROR
+    case EntityActionTypes.DeleteError:
+      return {
+        ...state,
+        editModel: { ...state.editModel, isLoading: false, hasError: true }
       };
     // LOAD
     case EntityActionTypes.Load:
@@ -111,6 +137,24 @@ export function entityReducer(
         ...state,
         isFetching: false
       };
+    // EDIT MODEL
+    case EntityActionTypes.SetEditModel:
+      const editingModel = action.payload.editModel;
+      return {
+        ...state,
+        editModel: { ...editingModel }
+      };
+    case EntityActionTypes.UnsetEditModel:
+      return { ...state, editModel: undefined };
+    // CREATE MODEL
+    case EntityActionTypes.SetCreateModel:
+      const creatingModel = action.payload.createModel;
+      return {
+        ...state,
+        createModel: { ...creatingModel }
+      };
+    case EntityActionTypes.UnsetCreateModel:
+      return { ...state, createModel: undefined };
 
     default:
       return state;

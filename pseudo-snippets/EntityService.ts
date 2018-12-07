@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { ConfigService } from "src/app/modules/core/config/config.service";
 import { IEntityDb } from "../shared/models/db/entity.db.models";
+import { IEntitySelectListItem } from "../shared/models/db/entity.db.models";
 
 @Injectable()
 export class EntityService {
@@ -24,6 +25,13 @@ export class EntityService {
   delete(entityParamId) {
     return this.http.delete<IEntityDb>(
       `${EntityService.apiUrl}/${entityParamId}`
+    );
+  }
+
+  undelete(entityParamId) {
+    return this.http.put<IEntityDb>(
+      `${EntityService.apiUrl}/${entityParamId}/undelete`,
+      null
     );
   }
 

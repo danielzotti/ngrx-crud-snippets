@@ -1,3 +1,5 @@
+import { Action } from "@ngrx/store";
+
 export enum EntityActionTypes {
   Load = "[Entity] Load",
   LoadSuccess = "[Entity] Load Success",
@@ -14,7 +16,19 @@ export enum EntityActionTypes {
 
   Delete = "[Entity] Delete",
   DeleteSuccess = "[Entity] Delete Success",
+  DeleteSuccessLogical = "[Entity] Delete Success Logical",
+  DeleteSuccessPermanent = "[Entity] Delete Success Permanent",
   DeleteError = "[Entity] Delete Error",
+
+  Undelete = "[Entity] Undelete",
+  UndeleteSuccess = "[Entity] Undelete Success",
+  UndeleteError = "[Entity] Undelete Error",
+
+  SetEditModel = "[Entity] Set Edit Model",
+  UnsetEditModel = "[Entity] Unset Edit Model",
+
+  SetCreateModel = "[Entity] Set Create Model",
+  UnsetCreateModel = "[Entity] Unset Create Model",
 
   // List
   ListLoad = "[Entity List] Load",
@@ -25,99 +39,133 @@ export enum EntityActionTypes {
 // CREATE
 export class EntityCreate implements Action {
   readonly type = EntityActionTypes.Create;
-  payload: { parameterName: IEntityCreate };
-  constructor(public parameterName: IEntityCreate) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityCreate };
+  constructor(public entityParam: IEntityCreate) {
+    this.payload = { entityParam };
   }
 }
 export class EntityCreateSuccess implements Action {
   readonly type = EntityActionTypes.CreateSuccess;
-  payload: { parameterName: IEntityDb };
-  constructor(public parameterName: IEntityDb) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityDb };
+  constructor(public entityParam: IEntityDb) {
+    this.payload = { entityParam };
   }
 }
 export class EntityCreateError implements Action {
   readonly type = EntityActionTypes.CreateError;
-  payload: { parameterName: IEntityStoreEntity };
-  constructor(public parameterName: IEntityStoreEntity) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityStoreEntity };
+  constructor(public entityParam: IEntityStoreEntity) {
+    this.payload = { entityParam };
   }
 }
 
 // UPDATE
 export class EntityUpdate implements Action {
   readonly type = EntityActionTypes.Update;
-  payload: { parameterName: IEntityEdit };
-  constructor(public parameterName: IEntityEdit) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityEdit };
+  constructor(public entityParam: IEntityEdit) {
+    this.payload = { entityParam };
   }
 }
 export class EntityUpdateSuccess implements Action {
   readonly type = EntityActionTypes.UpdateSuccess;
-  payload: { parameterName: IEntityDb };
-  constructor(public parameterName: IEntityDb) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityDb };
+  constructor(public entityParam: IEntityDb) {
+    this.payload = { entityParam };
   }
 }
 export class EntityUpdateError implements Action {
   readonly type = EntityActionTypes.UpdateError;
-  payload: { parameterName: IEntityStoreEntity };
-  constructor(public parameterName: IEntityStoreEntity) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityStoreEntity };
+  constructor(public entityParam: IEntityStoreEntity) {
+    this.payload = { entityParam };
   }
 }
 
 // DELETE
 export class EntityDelete implements Action {
   readonly type = EntityActionTypes.Delete;
-  payload: { parameterName: IEntityStoreEntity };
-  constructor(public parameterName: IEntityStoreEntity) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityStoreEntity };
+  constructor(public entityParam: IEntityStoreEntity) {
+    this.payload = { entityParam };
   }
 }
 export class EntityDeleteSuccess implements Action {
   readonly type = EntityActionTypes.DeleteSuccess;
-  payload: { parameterName: IEntityStoreEntity };
-  constructor(public parameterName: IEntityStoreEntity) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityStoreEntity };
+  constructor(public entityParam: IEntityStoreEntity) {
+    this.payload = { entityParam };
+  }
+}
+export class EntityDeleteSuccessLogical implements Action {
+  readonly type = EntityActionTypes.DeleteSuccessLogical;
+  payload: { entityParam: IEntityStoreEntity };
+  constructor(public entityParam: IEntityStoreEntity) {
+    this.payload = { entityParam };
+  }
+}
+export class EntityDeleteSuccessPermanent implements Action {
+  readonly type = EntityActionTypes.DeleteSuccessPermanent;
+  payload: { entityParam: IEntityStoreEntity };
+  constructor(public entityParam: IEntityStoreEntity) {
+    this.payload = { entityParam };
   }
 }
 export class EntityDeleteError implements Action {
   readonly type = EntityActionTypes.DeleteError;
-  payload: { parameterName: IEntityStoreEntity };
-  constructor(public parameterName: IEntityStoreEntity) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityStoreEntity };
+  constructor(public entityParam: IEntityStoreEntity) {
+    this.payload = { entityParam };
   }
+}
+
+// UNDELETE
+export class EntityUndelete implements Action {
+  readonly type = EntityActionTypes.Undelete;
+  payload: { entityParam: IEntityEdit };
+  constructor(public entityParam: IEntityEdit) {
+    this.payload = { entityParam };
+  }
+}
+export class EntityUndeleteSuccess implements Action {
+  readonly type = EntityActionTypes.UndeleteSuccess;
+  payload: { entityParam: IEntityStoreEntity };
+  constructor(public entityParam: IEntityStoreEntity) {
+    this.payload = { entityParam };
+  }
+}
+export class EntityUndeleteError implements Action {
+  readonly type = EntityActionTypes.UndeleteError;
+  constructor() {}
 }
 
 // LOAD
 export class EntityLoad implements Action {
   readonly type = EntityActionTypes.Load;
-  payload: { parameterNameId: number };
-  constructor(public parameterNameId: number) {
-    this.payload = { parameterNameId };
+  payload: { entityParamId: number };
+  constructor(public entityParamId: number) {
+    this.payload = { entityParamId };
   }
 }
 export class EntityLoadSuccess implements Action {
   readonly type = EntityActionTypes.LoadSuccess;
-  payload: { parameterName: IEntityDb };
-  constructor(public parameterName: IEntityDb) {
-    this.payload = { parameterName };
+  payload: { entityParam: IEntityDb };
+  constructor(public entityParam: IEntityDb) {
+    this.payload = { entityParam };
   }
 }
 export class EntityLoadError implements Action {
   readonly type = EntityActionTypes.LoadError;
-  payload: { parameterName: IEntityDb };
+  payload: { entityParam: IEntityDb };
   constructor() {
-    this.payload = { parameterName: undefined };
+    this.payload = { entityParam: undefined };
   }
 }
 export class EntityLoadCancel implements Action {
   readonly type = EntityActionTypes.LoadCancel;
-  payload: { parameterName: IEntityDb };
+  payload: { entityParam: IEntityDb };
   constructor() {
-    this.payload = { parameterName: undefined };
+    this.payload = { entityParam: undefined };
   }
 }
 
@@ -147,6 +195,37 @@ export class EntityListLoadCancel implements Action {
     this.payload = { list: [] };
   }
 }
+// EDIT MODEL
+export class EntitySetEditModel implements Action {
+  readonly type = EntityActionTypes.SetEditModel;
+  payload: { editModel: IEntityEdit };
+  constructor(public editModel: IEntityEdit) {
+    this.payload = { editModel };
+  }
+}
+export class EntityUnsetEditModel implements Action {
+  readonly type = EntityActionTypes.UnsetEditModel;
+  payload: { editModel: IEntityEdit };
+  constructor() {
+    this.payload = { editModel: undefined };
+  }
+}
+
+// CREATE MODEL
+export class EntitySetCreateModel implements Action {
+  readonly type = EntityActionTypes.SetCreateModel;
+  payload: { createModel: IEntityCreate };
+  constructor(public createModel: IEntityCreate) {
+    this.payload = { createModel };
+  }
+}
+export class EntityUnsetCreateModel implements Action {
+  readonly type = EntityActionTypes.UnsetCreateModel;
+  payload: { createModel: IEntityCreate };
+  constructor() {
+    this.payload = { createModel: undefined };
+  }
+}
 
 export type EntityActions =
   | EntityCreate
@@ -156,6 +235,13 @@ export type EntityActions =
   | EntityUpdateSuccess
   | EntityUpdateError
   | EntityDelete
+  | EntityDeleteSuccess
+  | EntityDeleteSuccessLogical
+  | EntityDeleteSuccessPermanent
+  | EntityDeleteError
+  | EntityUndelete
+  | EntityUndeleteSuccess
+  | EntityUndeleteError
   | EntityLoad
   | EntityLoadSuccess
   | EntityLoadError
@@ -163,4 +249,8 @@ export type EntityActions =
   | EntityListLoad
   | EntityListLoadSuccess
   | EntityListLoadError
-  | EntityListLoadCancel;
+  | EntityListLoadCancel
+  | EntitySetEditModel
+  | EntityUnsetEditModel
+  | EntitySetCreateModel
+  | EntityUnsetCreateModel;
