@@ -704,7 +704,7 @@
         "description": "List of common effects of a CRUD Entity"
     },
     "NGRX CRUD Service": {
-        "prefix": "ngrx-crud-services",
+        "prefix": "ngrx-crud-service",
         "body": [
             "import { Injectable } from '@angular/core';\r",
             "import { HttpClient } from '@angular/common/http';\r",
