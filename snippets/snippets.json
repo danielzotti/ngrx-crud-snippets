@@ -1,6 +1,6 @@
 {
-    "NGRX CRUD Action Types": {
-        "prefix": "ngrx-crud-action-types",
+    "NGRX CRUD Actions": {
+        "prefix": "ngrx-crud-actions",
         "body": [
             "import { Action } from '@ngrx/store';\r",
             "\r",
@@ -40,13 +40,7 @@
             "  ListLoadError = '[${1:Entity} List] Load Error',\r",
             "  ListLoadCancel = '[${1:Entity} List] Load Cancel',\r",
             "}\r",
-            "$0"
-        ],
-        "description": "List of common ActionTypes of a CRUD Entity"
-    },
-    "NGRX CRUD Actions": {
-        "prefix": "ngrx-crud-actions",
-        "body": [
+            "\r",
             "//CREATE\r",
             "export class ${1:Entity}Create implements Action {\r",
             "  readonly type = ${1:Entity}ActionTypes.Create;\r",
@@ -883,5 +877,36 @@
             ""
         ],
         "description": "Common facade of a CRUD Entity"
+    },
+    "NGRX CRUD adapter": {
+        "prefix": "ngrx-crud-adapter",
+        "body": [
+            "import { createEntityAdapter } from '@ngrx/entity';\r",
+            "import { I${1:Entity}StoreEntity } from './${2:entity}.state';\r",
+            "\r",
+            "export const adapter = createEntityAdapter<I${1:Entity}StoreEntity>();"
+        ],
+        "description": "Common adapter of a CRUD Entity"
+    },
+    "NGRX CRUD state": {
+        "prefix": "ngrx-crud-state",
+        "body": [
+            "import { I${1:Entity}Create } from 'src/app/components/${2:entity}/create/${2:entity}-create.models';\r",
+            "import { ICommonEntityState } from '../state';\r",
+            "import { IFormModel } from 'src/app/shared/models/form.models';\r",
+            "import { I${1:Entity}Db } from 'src/app/shared/models/db/${2:entity}.db.models';\r",
+            "import { I${1:Entity}Edit } from 'src/app/components/${2:entity}/edit/${2:entity}-edit.models';\r",
+            "\r",
+            "export interface I${1:Entity}State\r",
+            "  extends ICommonEntityState<\r",
+            "    I${1:Entity}StoreEntity,\r",
+            "    I${1:Entity}Create,\r",
+            "    I${1:Entity}Edit\r",
+            "  > {}\r",
+            "\r",
+            "export type I${1:Entity}StoreEntity = IFormModel & I${1:Entity}Db;\r",
+            ""
+        ],
+        "description": "Common state of a CRUD Entity"
     }
 }
