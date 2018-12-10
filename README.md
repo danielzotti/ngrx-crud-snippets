@@ -7,7 +7,7 @@ Working with NgRx it's as simple as writing `ngrx-crud-`\*.
 ## The complete list of snippets (alphabetical order)
 
 - **actions**: `ngrx-crud-actions`
-  - see result file in [EntityActionTypes.ts](./examples/EntityActionTypes.ts)
+  - see result file in [EntityActions.ts](./examples/EntityActions.ts)
 - **adapter**: `ngrx-crud-adapter`
   - see result file in [EntityAdapter.ts](./examples/EntityAdapter.ts)
 - **effects**: `ngrx-crud-effects`
