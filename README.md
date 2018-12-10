@@ -2,7 +2,9 @@
 
 A bunch of snippets for a common CRUD Entity in NgRx.
 
-## Features
+Working with NgRx it's as simple as writing `ngrx-crud-`\*.
+
+## The complete list of snippets
 
 1. `ngrx-crud-action-types`: ActionTypes (should be used before `ngrx-crud-actions`)
    - see result file in [EntityActions.ts](./examples/EntityActions.ts)
