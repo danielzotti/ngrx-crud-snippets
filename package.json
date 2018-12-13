@@ -1,9 +1,9 @@
 {
     "name": "ngrx-crud-snippets",
-    "displayName": "NGRX CRUD Snippets",
+    "displayName": "NgRx CRUD Snippets",
     "description": "List of snippets for a CRUD entity",
-    "version": "0.0.1",
-    "publisher": "Daniel Zotti",
+    "version": "1.0.0",
+    "publisher": "daniel-zotti",
     "repository": {
         "type": "git",
         "url": "https://github.com/danielzotti/ngrx-crud-snippets"
@@ -20,5 +20,10 @@
             "language": "typescript",
             "path": "./snippets/snippets.json"
         }]
-    }
+    },
+    "bugs": {
+        "url": "https://github.com/danielzotti/ngrx-crud-snippets/issues",
+        "email": "admin@danielzotti.it"
+    },
+    "homepage": "https://github.com/danielzotti/ngrx-crud-snippets/blob/master/README.md"
 }

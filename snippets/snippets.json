@@ -1,5 +1,5 @@
 {
-    "NGRX CRUD Actions": {
+    "NgRx CRUD Actions": {
         "prefix": "ngrx-crud-actions",
         "body": [
             "import { Action } from '@ngrx/store';\r",
@@ -264,7 +264,7 @@
         ],
         "description": "List of common Actions of a CRUD Entity"
     },
-    "NGRX CRUD Selectors": {
+    "NgRx CRUD Selectors": {
         "prefix": "ngrx-crud-selectors",
         "body": [
             "import { createSelector } from '@ngrx/store';\r",
@@ -315,7 +315,7 @@
         ],
         "description": "List of common selectors of a CRUD Entity"
     },
-    "NGRX CRUD Reducers": {
+    "NgRx CRUD Reducers": {
         "prefix": "ngrx-crud-reducers",
         "body": [
             "import { adapter } from './${2:entity}.adapter';\r",
@@ -487,7 +487,7 @@
         ],
         "description": "List of common reducers of a CRUD Entity"
     },
-    "NGRX CRUD Effects": {
+    "NgRx CRUD Effects": {
         "prefix": "ngrx-crud-effects",
         "body": [
             "import { Injectable } from \"@angular/core\";\r",
@@ -697,7 +697,7 @@
         ],
         "description": "List of common effects of a CRUD Entity"
     },
-    "NGRX CRUD Service": {
+    "NgRx CRUD Service": {
         "prefix": "ngrx-crud-service",
         "body": [
             "import { Injectable } from '@angular/core';\r",
@@ -767,7 +767,7 @@
         ],
         "description": "List of common service of a CRUD Entity"
     },
-    "NGRX CRUD Facade": {
+    "NgRx CRUD Facade": {
         "prefix": "ngrx-crud-facade",
         "body": [
             "import { Injectable } from \"@angular/core\";\r",
@@ -878,7 +878,7 @@
         ],
         "description": "Common facade of a CRUD Entity"
     },
-    "NGRX CRUD adapter": {
+    "NgRx CRUD adapter": {
         "prefix": "ngrx-crud-adapter",
         "body": [
             "import { createEntityAdapter } from '@ngrx/entity';\r",
@@ -888,7 +888,7 @@
         ],
         "description": "Common adapter of a CRUD Entity"
     },
-    "NGRX CRUD state": {
+    "NgRx CRUD state": {
         "prefix": "ngrx-crud-state",
         "body": [
             "import { I${1:Entity}Create } from 'src/app/components/${2:entity}/create/${2:entity}-create.models';\r",
