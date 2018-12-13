@@ -2,7 +2,7 @@
     "name": "ngrx-crud-snippets",
     "displayName": "NgRx CRUD Snippets",
     "description": "List of snippets for a CRUD entity",
-    "version": "1.0.1",
+    "version": "1.2.0",
     "publisher": "daniel-zotti",
     "repository": {
         "type": "git",
