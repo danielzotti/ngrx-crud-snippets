@@ -6,6 +6,8 @@ Working with NgRx it's as simple as writing `ngrx-crud-`\*.
 
 ## The complete list of snippets (alphabetical order)
 
+- **actions**: `ngrx-crud-action-class`
+  - see result file in [EntityActionsClass.ts](./examples/EntityActionClass.ts)
 - **actions**: `ngrx-crud-actions`
   - see result file in [EntityActions.ts](./examples/EntityActions.ts)
 - **adapter**: `ngrx-crud-adapter`
@@ -72,6 +74,16 @@ none (for now)
 
 ## Release Notes
 
-### 1.0.0
+### [1.2.0]
 
-Initial release
+- Added snippet ngrx-action-class
+- Deleted changelog and moved to README.md
+
+### [1.0.1]
+
+- Updated homepage
+- Added tags
+
+### [1.0.0]
+
+- Initial release of NgRx CRUD Snippets

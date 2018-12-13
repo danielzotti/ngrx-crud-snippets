@@ -1,4 +1,18 @@
 {
+    "NgRx Action Class": {
+        "prefix": "ngrx-crud-action-class",
+        "body": [
+            "export class ${1:Entity}${2:Action} implements Action {\r",
+            "  readonly type = ${1:Entity}ActionTypes.${2:Action};\r",
+            "  payload: { ${3:payload}: ${4:PayloadType} };\r",
+            "  constructor(${3:payload}: ${4:PayloadType}) {\r",
+            "    this.payload = { ${3:payload} };\r",
+            "  }\r",
+            "}\r",
+            "$0"
+        ],
+        "description": "A common NgRx Action"
+    },
     "NgRx CRUD Actions": {
         "prefix": "ngrx-crud-actions",
         "body": [
