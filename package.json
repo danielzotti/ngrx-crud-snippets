@@ -15,6 +15,7 @@
     "categories": [
         "Snippets"
     ],
+    "keywords": ["ngrx", "angular", "redux", "snippets"],
     "contributes": {
         "snippets": [{
             "language": "typescript",
